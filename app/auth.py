@@ -19,7 +19,7 @@ def init_oauth(app):
         userinfo_endpoint="https://www.googleapis.com/oauth2/v1/userinfo",
         client_kwargs={
             "scope": "openid email profile",
-            "redirect_uri": "http://https://ytfeedserver.onrender.com/auth/google_auth",  # Ensure this matches your Google OAuth redirect URI
+            "redirect_uri": "https://ytfeedserver.onrender.com/auth/google_auth",  # Ensure this matches your Google OAuth redirect URI
         },
         server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",  # Fetch metadata, including jwks_uri
     )
