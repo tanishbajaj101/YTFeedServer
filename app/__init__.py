@@ -37,6 +37,9 @@ def create_app():
     app.register_blueprint(routes_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
+    with app.app_context():
+        update_top_videos()
+        
     @scheduler.task('interval', id='update_top_videos', hours=24)
     def scheduled_update():
         with app.app_context():
