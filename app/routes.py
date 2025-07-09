@@ -61,10 +61,22 @@ def store_data():
             db.session.add(new_video)
             db.session.commit()
 
-        # 6. Store user-specific request data
-        new_user_data = UserData(google_id=user_google_id, video_id=video_id, tags=tags, timestamp=timestamp)
-        db.session.add(new_user_data)
-        db.session.commit()
+            # 6. Store user-specific request data only if not already submitted
+            existing_user_data = UserData.query.filter_by(
+                google_id=user_google_id,
+                video_id=video_id
+            ).first()
+
+            if not existing_user_data:
+                new_user_data = UserData(
+                    google_id=user_google_id,
+                    video_id=video_id,
+                    tags=tags,
+                    timestamp=timestamp
+                )
+                db.session.add(new_user_data)
+                db.session.commit()
+
 
         return jsonify({"message": "Data stored successfully"}), 200
 
